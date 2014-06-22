@@ -26,26 +26,52 @@ The folder structure should be:
  - test
  - train
 
-The run\_analysis() function first checks if the "UCI HAR Dataset" directory exists in the working directory, if not it will exit with the error message *"Unable to find UCI HAR Dataset directory"*.
+The run\_analysis() function first checks if the "UCI HAR Dataset" directory exists in the working directory, if not it will exit with the error message **"Unable to find UCI HAR Dataset directory"**.
 
 ## Running the analysis ##
 To run the analysis, make sure you set your working directory in R to a directory that contains both the run\_analysis.R file and the "UCI HAR Dataset" directory. Then load the R script using the command:
 
     > source("run_analysis.R")
 
-Once the script is loaded, you can run the run\_analysis() function in one of two ways:
+Once the script is loaded it will run the commands and generate and output file in the working directory called **"dataset.txt"** and will save the dataset in a dataframe called **tidy\_data**. You can then process the **tidy\_data** dataframe for further analysis.
 
+For reference, the code takes approximately 20 seconds to run on an computer with an Intel i7 4770 CPU, 8GB of RAM and a 7200RPM mechanical hard drive. 
 
-
-1. Call the function on its own. It will generate and output file in the working directory called "dataset.txt" and will output the dataset to the R console:
-
-    > run_analysis()
-
-
-2. Call the function and store the output to a dataframe. This way you can perform further analysis on the resulting dataset. This option will also create the "dataset.txt" file in the working directory.
-
-    > df<-run_analysis() 
- 
 ## Output ##
 
-The run\_analysis() function creates a new dataframe with 180 rows and 68 columns that contain the subjectid, activity and the average of the means and standard deviations for several fields from the original **"Human Activity Recognition Using Smartphones"** dataset. It will return the dataframe as the output of the function and it will also save it to a new file called "dataset.txt" in the working directory. If there is already a file with that name in the directory, it will be overwritten.
+The run\_analysis script creates a new dataframe called **tidy\_data** with 180 rows and 68 columns that contain the subjectid, activity and the average of the means and standard deviations for several fields (as detailed in the CookBook.md file) from the original **"Human Activity Recognition Using Smartphones"** dataset. It will also save the **tidy\_data** dataframe to a new file called **"dataset.txt"** in the working directory. If there is already a file with that name in the directory, it will be overwritten.
+
+## Analysis Details ##
+### Assumptions ###
+- One of the tasks to perform in the assignment was **"Extracts only the measurements on the mean and standard deviation for each measurement."**. It was assumed that only the columns with the strings "mean()" and "std()" comply with this requirement. Other columns that contained strings such as "meanFreq()" were not considered to be measurements on the mean or standard deviation.
+
+### Variable renaming ###
+Task 4 of the assignment is to "Appropriately labels the data set with descriptive variable names.".
+This is achieved in the script using the **create\_new\_name(name)** function in the R script. The function processes a string with the name of the column and outputs a more descriptive name, based on the recommendations from the "Editing Text Variables" lecture, on slide 16, which states:
+
+     Names of variables should be
+      - All lower case when possible
+      - Descriptive (Diagnosis vs Dx)
+      - Not duplicated
+      - Not have underscores or dots or white spaces
+
+Based on the names of the columns in the original dataset, there are 6 pieces of information in the name, which are used by the function for renaming:
+
+1. **Time or Frequency**: If the columns starts with "t" or "f", it then gets renamed to "time" "frequency" as appropriate.
+2. **Body or Gravity**: The second part of the name is either "Body" or "Gravity". These are mostly kept as it is already a full descriptive word
+3. **Accelerometer or Gyroscope**: The next part of the name is the sensor from which the data comes from, in this case the "Gyroscope" or the "Accelerometer". The full word is expanded from the abbreviations used in the original name.
+4. **Jerk and Magnitude**: The Jerk signals are already descriptive, so the word is kept. "Mag" is expanded to "magnitude".  
+5. **Mean or Standard Deviation**: The original data set contains several additional functions, but after keeping only the mean and standard deviation it is only necessary to rename these two functions from "mean" to "mean" and "std" to "standarddeviation"
+6. **X, Y or Z**. Finally we need to keep the axis in which the signal was collected. This is kept as is, only modified to be lower case: "X"->"X", "Y"->"Y", "Z"->"Z"
+
+All underscores, dashes and parenthesis are removed from the name.
+As an example the original column:
+
+    tBodyAcc-mean()-X
+
+will end up being named: 
+
+    timebodyaccelerometermeanx
+
+### Data set processing ###
+In 
