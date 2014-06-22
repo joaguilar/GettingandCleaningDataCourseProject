@@ -15,7 +15,7 @@ This repository contains 3 files:
 - CodeBook.md: A code book that describes the variables, the data, and any transformations or work performed on the data
 
 ## Requirements ##
-The functions contained in the run_analysis.R have a strong dependency on the [http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones ](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones  "Human Activity Recognition Using Smartphones") dataset. The file [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip ](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip  "getdata-projectfiles-UCI HAR Dataset.zip") should be downloaded and opened in the same directory as the R file, so that the "UCI HAR Dataset" directory is at the same level as the script. This dataset is not included in this git repository.
+The script contained in the run_analysis.R file use the [http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones ](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones  "Human Activity Recognition Using Smartphones") dataset. The file [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip ](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip  "getdata-projectfiles-UCI HAR Dataset.zip") should be downloaded and opened in the same directory as the R file, so that the "UCI HAR Dataset" directory is at the same level as the script. This dataset is not included in this git repository.
 The folder structure should be:
 
 - run_analysis.R
@@ -91,11 +91,12 @@ In order to create the outputs (**tidy\_data** dataframe and **dataset.txt** fil
 9. And finally the columns are renamed to reflect the fact that they now contain the average of the mean and standard deviation, not the actual mean and standard deviation. This is achieved by adding "average" to the beginning of the columns. For example the column "timebodyaccelerometermeanx" will be renamed to "averagetimebodyaccelerometermeanx".
 
 ### Output dataframe ###
-The output dataframe contains 68 columns and 180 rows. 
+The output dataframe contains 68 columns and 180 rows. The first column has the subject ID from the subject\_test.txt and subject\_train.txt files. The second column contains the names of the activities performed, from the y\_test.txt and y\_train.txt files, renamed to match the names from the 
+"activity_labels.txt" file. The remaninig columns contain the average of the means and standard deviations from the data from the different signals originally contained in the x\_test.txt and x\_train.txt files.
 
-"subjectid" | "activity" | "averagetimebodyaccelerometermeanx" | "averagetimebodyaccelerometermeany" | "averagetimebodyaccelerometermeanz" 
-------------|------------|-------------------------------------|-------------------------------------|------------------------------------
-1 | "WALKING" | 0.277330758736842 | -0.0173838185273684 | -0.111148103547368 
-2 | "WALKING" | 0.276426586440678 | -0.0185949199145763 | -0.105500357966102 
-3 | "WALKING" | 0.275567462068966 | -0.0171767844203448 | -0.112674859827586 
+"subjectid" | "activity" | "averagetimebodyaccelerometermeanx" | "averagetimebodyaccelerometermeany" | "averagetimebodyaccelerometermeanz" | ... 
+------------|------------|-------------------------------------|-------------------------------------|-------------------------------------|----
+1 | "WALKING" | 0.277330758736842 | -0.0173838185273684 | -0.111148103547368 | ...
+2 | "WALKING" | 0.276426586440678 | -0.0185949199145763 | -0.105500357966102 | ...
+3 | "WALKING" | 0.275567462068966 | -0.0171767844203448 | -0.112674859827586 | ...
   
