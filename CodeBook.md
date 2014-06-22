@@ -79,9 +79,9 @@ The x\_*.txt files contain signals obtained from the data from the experiments. 
 
 All in total, the x\_*.txt files contain 561 variables that correspond to 10299 observations, 2947 in the "x\_text.txt" file and 7352 in the "x\_train.txt" file.   
 
-### Dataset Processing ###
+## Dataset Processing ##
 
-#### Data Merge ####
+### Data Merge ###
 The data from the six files included in the zip files were merged together into one large dataset with 10299 rows and 563 columns. To achieve these, three intermediate datasets were created:
 
 - One combining the data from subject\_test.txt and subject\_train.txt
@@ -90,21 +90,21 @@ The data from the six files included in the zip files were merged together into 
 
 Using those three datasets the full merged dataset was created with the following structure:
 
-- Column 1: Named "subjectid", it contains the subject id from the first dataset that contained data from the subject\_test.txt and subject\_train.txt files.
-- Column 2: Named "activity", it contains the activity performed during the observation. This comes from the dataset that contained data from the y\_test.txt and y\_train.txt files. In addition the activities were renamed according to the id/name pairs in the "activity_labels.txt" file.
-- Columns 3-563: Correspond to the 561 columns in the x\_test.txt and x\_train.txt files. Thet are named using the column/names mapping from the "features.txt" file.
+- **Column 1**: Named "subjectid", it contains the subject id from the first dataset that contained data from the subject\_test.txt and subject\_train.txt files.
+- **Column 2**: Named "activity", it contains the activity performed during the observation. This comes from the dataset that contained data from the y\_test.txt and y\_train.txt files. In addition the activities were renamed according to the id/name pairs in the "activity_labels.txt" file.
+- **Columns 3-563**: Correspond to the 561 columns in the x\_test.txt and x\_train.txt files. Thet are named using the column/names mapping from the "features.txt" file.
 
-#### Data filtering ####
+### Data filtering ###
 For the output dataset we only need information about columns that contain the mean or standard deviation. To perform this filtering, a regular expression was used to look for columns that have the strings mean() or std() and filtered out the remaining columns. It uses the grep function on the column names. Once the columns with mean() or std() are identified, a new dataframe is created with only these columns (plus the "subjectid" and "activity" columns). Other columns that contained strings such as "meanFreq()" were not considered to be measurements on the mean or standard deviation.
 
 This left the dataset with 68 columns:
 
-- Column 1: "subjectid" as in the previous dataset.
-- Column 2: "activity" as in the previous dataset.
-- Columns 3-68: Correspond to 66 columns with the mean or standard deviation of a measurement. For details on which columns are included, see section **Column Descriptions** at the end of this file.
+- **Column 1**: "subjectid" as in the previous dataset.
+- **Column 2**: "activity" as in the previous dataset.
+- **Columns 3-68**: Correspond to 66 columns with the mean or standard deviation of a measurement. For details on which columns are included, see section **Column Descriptions** at the end of this file.
 
 
-#### Column Renaming ####
+### Column Renaming ###
 Task 4 of the assignment is to "Appropriately labels the data set with descriptive variable names.".
 This task is performed using the **create\_new\_name(name)** function in the R script. The function processes a string with the name of the column and outputs a more descriptive name, based on the recommendations from the "Editing Text Variables" lecture, on slide 16, which states:
 
@@ -135,14 +135,13 @@ will end up being named:
 
 In the final dataset, since it contains the average of the means and standard deviations, the prefix "average" was used on these columns.
 
-### Output dataset ###
-
-#### Summarization ####
+### Summarization ###
 The output dataset contains the average of the means and standard deviations grouped by subject and activity. The "R" function aggregate() was used to aggregate the data by subject and activity.
 
 The resulting dataset contains 180 rows, which corresponds to 30 subjects with 6 activities each, and 68 columns, one for the subject id, one for the activity, and 66 averages of either means or standard deviations from the original data.
 
-#### Column descriptions ####
+
+## Output Dataset Column Descriptions ##
 
 Variables | Description
 ----------|------------
